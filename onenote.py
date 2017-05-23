@@ -109,7 +109,7 @@ def create_notebook(session):
 
 
 def create_section(session, notebook_id, name):
-    print('Create section: %s' % name)
+    print('Creating section: "%s"' % name)
     resp = session.post(API_BASE + '/notebooks/%s/sections' % notebook_id, json={'name': name})
     resp.raise_for_status()
 
