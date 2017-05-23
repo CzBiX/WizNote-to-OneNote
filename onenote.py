@@ -100,8 +100,8 @@ def get_token(session):
 
 
 def create_notebook(session):
-    name = input('Notebook to create(such as WizNote): ')
-    print('Create notebook: %s' % name)
+    name = input('Pleas input new notebook name(such as WizNote, can\'t be empty).\nName: ')
+    print('Creating notebook: "%s"' % name)
     resp = session.post(API_BASE + '/notebooks', json={'name': name})
     resp.raise_for_status()
 
