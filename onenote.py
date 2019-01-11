@@ -95,6 +95,8 @@ def get_token(session):
         'code': code,
         'redirect_uri': REDIRECT_URI,
     }).json()
+    
+    print('Token result:', resp)
 
     return resp['access_token']
 
