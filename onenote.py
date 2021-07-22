@@ -7,7 +7,7 @@ import sqlite3
 from collections import namedtuple, OrderedDict
 from datetime import datetime, timedelta, timezone
 from sys import platform
-from urllib.parse import urlencode
+from urllib.parse import urlencode, parse_qs
 from zipfile import ZipFile
 
 import requests
@@ -75,17 +75,16 @@ def get_token(session):
     print('Sign in via: ')
     print(AUTH_URL)
     print('Copy the url of blank page after signed in,\n'
-          'url should starts with "https://login.live.com/oauth20_desktop.srf"')
+          f'url should starts with "{REDIRECT_URI}"')
 
     while True:
         url = input('URL: ')
 
-        match = re.match(r'https://login.live.com/oauth20_desktop\.srf\?code=([\w-]{37})', url)
-        if not match:
+        if not url.startswith(REDIRECT_URI):
             print('Invalid URL!')
             continue
 
-        code = match.group(1)
+        code = parse_qs(url[url.index('?')+1:])['code'][0]
         break
 
     resp = session.post(OAUTH_URL, data={
